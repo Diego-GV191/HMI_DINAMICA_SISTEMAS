@@ -33,10 +33,24 @@ namespace DINAMICA_SISTEMAS
             }
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                if (serialPort1.IsOpen) serialPort1.Close();
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             try
             {
+                chart1.Invoke((MethodInvoker)(() => chart1.Series["Value"].Points.Clear()));
 
                 cmbPort.Items.Clear();
                 cmbPort.Enabled = true;
@@ -157,17 +171,16 @@ namespace DINAMICA_SISTEMAS
         {
             try
             {
-                chart1.Series.Clear();
-
-                if (lblTemp.Text.Equals("TEMP OFF"))
+                if (btnTemp.Text.Equals("Temperatura OFF"))
                 {
-                    lblTemp.Text = "TEMP ON";
+                    btnCap.Enabled = false;
+                    btnTemp.Text = "Temperatura ON";
                     SendData("$TEMP_ON");
                 }
-
-                if (lblTemp.Text.Equals("TEMP ON"))
+                else
                 {
-                    lblTemp.Text = "TEMP OFF";
+                    btnCap.Enabled = true;
+                    btnTemp.Text = "Temperatura OFF";
                     SendData("$TEMP_OFF");
                 }
             }
@@ -182,16 +195,16 @@ namespace DINAMICA_SISTEMAS
         {
             try
             {
-
-                if (lblCap.Text.Equals("CAP OFF"))
+                if (btnCap.Text.Equals("Capacitor OFF"))
                 {
-                    lblCap.Text = "CAP ON";
+                    btnTemp.Enabled = false;
+                    btnCap.Text = "Capacitor ON";
                     SendData("$SEN_ON");
                 }
-
-                if (lblCap.Text.Equals("CAP ON"))
+                else
                 {
-                    lblCap.Text = "CAP OFF";
+                    btnTemp.Enabled = true;
+                    btnCap.Text = "Capacitor OFF";
                     SendData("$SEN_OFF");
                 }
             }
@@ -211,5 +224,11 @@ namespace DINAMICA_SISTEMAS
                 chart1.Invoke((MethodInvoker)(() => chart1.Series["Value"].Points.AddY(value)));
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            chart1.Invoke((MethodInvoker)(() => chart1.Series["Value"].Points.Clear()));
+        }
+
     }
 }
