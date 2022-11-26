@@ -20,10 +20,30 @@ namespace DINAMICA_SISTEMAS
             InitializeComponent();
         }
 
+        private void SendData(String data)
+        {
+            try
+            {
+                if (serialPort1.IsOpen) serialPort1.WriteLine(data);
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             try
             {
+
+                cmbPort.Items.Clear();
+                cmbPort.Enabled = true;
+                cmbBaudRate.Enabled = true;
+                btnCap.Enabled = false;
+                btnTemp.Enabled = false;
+
                 if (serialPort1.IsOpen)
                 {
                     btnConexion.Text = "Conectar";
@@ -49,6 +69,8 @@ namespace DINAMICA_SISTEMAS
                 cmbPort.Items.Clear();
                 cmbPort.Enabled = true;
                 cmbBaudRate.Enabled = true;
+                btnCap.Enabled = false;
+                btnTemp.Enabled = false;
 
                 try
                 {
@@ -90,6 +112,8 @@ namespace DINAMICA_SISTEMAS
 
                     cmbBaudRate.Enabled = false;
                     cmbPort.Enabled = false;
+                    btnCap.Enabled = true;
+                    btnTemp.Enabled = true;
                     lblEstadoConexion.Text = "ONLINE";
                     btnConexion.Text = "Desconectar";
                 }
@@ -97,6 +121,8 @@ namespace DINAMICA_SISTEMAS
                 {
                     cmbPort.Enabled = true;
                     cmbBaudRate.Enabled = true;
+                    btnCap.Enabled = false;
+                    btnTemp.Enabled = false;
                     cmbPort.Items.Clear();
                     btnConexion.Text = "Escanear";
 
@@ -115,6 +141,8 @@ namespace DINAMICA_SISTEMAS
                     lblEstadoConexion.Text = "OFFLINE";
                     cmbPort.Enabled = true;
                     cmbBaudRate.Enabled = true;
+                    btnCap.Enabled = false;
+                    btnTemp.Enabled = false;
                 }
                 catch (Exception ex)
                 {
@@ -123,6 +151,65 @@ namespace DINAMICA_SISTEMAS
                 }
             }
 
+        }
+
+        private void btnTemp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                chart1.Series.Clear();
+
+                if (lblTemp.Text.Equals("TEMP OFF"))
+                {
+                    lblTemp.Text = "TEMP ON";
+                    SendData("$TEMP_ON");
+                }
+
+                if (lblTemp.Text.Equals("TEMP ON"))
+                {
+                    lblTemp.Text = "TEMP OFF";
+                    SendData("$TEMP_OFF");
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCap_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                if (lblCap.Text.Equals("CAP OFF"))
+                {
+                    lblCap.Text = "CAP ON";
+                    SendData("$SEN_ON");
+                }
+
+                if (lblCap.Text.Equals("CAP ON"))
+                {
+                    lblCap.Text = "CAP OFF";
+                    SendData("$SEN_OFF");
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            if (serialPort1.IsOpen && serialPort1.BytesToRead > 0)
+            {
+                String SerialData = serialPort1.ReadLine();
+                int value = Convert.ToInt32(SerialData.Trim());
+                chart1.Invoke((MethodInvoker)(() => chart1.Series["Value"].Points.AddY(value)));
+            }
         }
     }
 }
