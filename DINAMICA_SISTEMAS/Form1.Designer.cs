@@ -43,6 +43,7 @@
             this.btnTemp = new System.Windows.Forms.Button();
             this.btnCap = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnCSV = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,19 +56,24 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea2.AxisX.IsMarginVisible = false;
             chartArea2.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(12, 189);
+            this.chart1.Location = new System.Drawing.Point(12, 142);
             this.chart1.Name = "chart1";
+            series2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
+            series2.BackSecondaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(83)))), ((int)(((byte)(255)))));
             series2.BorderWidth = 6;
             series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(88)))), ((int)(((byte)(127)))));
             series2.Legend = "Legend1";
             series2.Name = "Value";
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(740, 205);
+            this.chart1.Size = new System.Drawing.Size(740, 252);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -172,6 +178,18 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnCSV
+            // 
+            this.btnCSV.FlatAppearance.BorderSize = 0;
+            this.btnCSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCSV.Location = new System.Drawing.Point(614, 83);
+            this.btnCSV.Name = "btnCSV";
+            this.btnCSV.Size = new System.Drawing.Size(136, 32);
+            this.btnCSV.TabIndex = 3;
+            this.btnCSV.Text = "Guardar datos";
+            this.btnCSV.UseVisualStyleBackColor = true;
+            this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,6 +197,7 @@
             this.ClientSize = new System.Drawing.Size(764, 406);
             this.Controls.Add(this.btnCap);
             this.Controls.Add(this.btnTemp);
+            this.Controls.Add(this.btnCSV);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnConexion);
             this.Controls.Add(this.cmbPort);
@@ -209,6 +228,7 @@
         private System.Windows.Forms.Button btnTemp;
         private System.Windows.Forms.Button btnCap;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCSV;
     }
 }
 

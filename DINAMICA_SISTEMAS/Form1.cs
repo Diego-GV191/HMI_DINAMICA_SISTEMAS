@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -217,18 +218,69 @@ namespace DINAMICA_SISTEMAS
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            if (serialPort1.IsOpen && serialPort1.BytesToRead > 0)
+            try
             {
-                String SerialData = serialPort1.ReadLine();
-                int value = Convert.ToInt32(SerialData.Trim());
-                chart1.Invoke((MethodInvoker)(() => chart1.Series["Value"].Points.AddY(value)));
+                if (serialPort1.IsOpen && serialPort1.BytesToRead > 0)
+                {
+                    String SerialData = serialPort1.ReadLine();
+                    int value = Convert.ToInt32(SerialData.Trim());
+                    chart1.Invoke((MethodInvoker)(() =>
+                    {
+                        if (chart1.ChartAreas["ChartArea1"].AxisX.Maximum > 100)
+                            chart1.ChartAreas["ChartArea1"].AxisX.Minimum = chart1.ChartAreas["ChartArea1"].AxisX.Maximum - 100;
+                        chart1.Series["Value"].Points.AddY(value);
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            chart1.Invoke((MethodInvoker)(() => chart1.Series["Value"].Points.Clear()));
+            try
+            {
+                chart1.Invoke((MethodInvoker)(() => chart1.Series["Value"].Points.Clear()));
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
         }
 
+        private void btnCSV_Click(object sender, EventArgs e)
+        {
+            String YValuesCSV = "";
+            String XValuesCSV = "";
+            String CSVLine = "";
+            int XPosition = 0;
+            var value = chart1.Series["Value"].Points;
+            foreach (var item in value)
+            {
+                YValuesCSV = item.YValues[0].ToString();
+                XValuesCSV = XPosition.ToString();
+                CSVLine += XValuesCSV + "," + YValuesCSV + "," + "\r\n";
+                XPosition++;
+            }
+            Console.WriteLine(CSVLine);
+            CreateCSV(CSVLine);
+        }
+
+        private void CreateCSV(String text)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "CSV data|*.csv|TEXT data|*.txt";
+            saveFileDialog1.Title = "Guardar";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter file = new StreamWriter(saveFileDialog1.FileName);
+                file.WriteLine(text);
+                file.Close();
+            }
+        }
     }
 }
