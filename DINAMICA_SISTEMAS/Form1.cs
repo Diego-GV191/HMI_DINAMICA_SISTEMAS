@@ -14,7 +14,7 @@ namespace DINAMICA_SISTEMAS
 {
     public partial class Form1 : Form
     {
-        bool Debug = true;
+        readonly bool Debug = false;
 
         public Form1()
         {
@@ -58,6 +58,8 @@ namespace DINAMICA_SISTEMAS
                 cmbBaudRate.Enabled = true;
                 btnCap.Enabled = false;
                 btnTemp.Enabled = false;
+                btnDistance.Enabled = false;
+                btnCalib.Enabled = false;
 
                 if (serialPort1.IsOpen)
                 {
