@@ -86,6 +86,8 @@ namespace DINAMICA_SISTEMAS
                 cmbBaudRate.Enabled = true;
                 btnCap.Enabled = false;
                 btnTemp.Enabled = false;
+                btnDistance.Enabled = false;
+                btnCalib.Enabled = false;
 
                 try
                 {
@@ -129,6 +131,8 @@ namespace DINAMICA_SISTEMAS
                     cmbPort.Enabled = false;
                     btnCap.Enabled = true;
                     btnTemp.Enabled = true;
+                    btnDistance.Enabled = true;
+                    btnCalib.Enabled = true;
                     lblEstadoConexion.Text = "ONLINE";
                     btnConexion.Text = "Desconectar";
                 }
@@ -138,6 +142,8 @@ namespace DINAMICA_SISTEMAS
                     cmbBaudRate.Enabled = true;
                     btnCap.Enabled = false;
                     btnTemp.Enabled = false;
+                    btnDistance.Enabled = false;
+                    btnCalib.Enabled = false;
                     cmbPort.Items.Clear();
                     btnConexion.Text = "Escanear";
 
@@ -158,6 +164,8 @@ namespace DINAMICA_SISTEMAS
                     cmbBaudRate.Enabled = true;
                     btnCap.Enabled = false;
                     btnTemp.Enabled = false;
+                    btnDistance.Enabled = false;
+                    btnCalib.Enabled = false;
                 }
                 catch (Exception ex)
                 {
@@ -175,12 +183,14 @@ namespace DINAMICA_SISTEMAS
                 if (btnTemp.Text.Equals("Temperatura OFF"))
                 {
                     btnCap.Enabled = false;
+                    btnDistance.Enabled = false;
                     btnTemp.Text = "Temperatura ON";
                     SendData("$TEMP_ON");
                 }
                 else
                 {
                     btnCap.Enabled = true;
+                    btnDistance.Enabled = true;
                     btnTemp.Text = "Temperatura OFF";
                     SendData("$TEMP_OFF");
                 }
@@ -199,12 +209,14 @@ namespace DINAMICA_SISTEMAS
                 if (btnCap.Text.Equals("Capacitor OFF"))
                 {
                     btnTemp.Enabled = false;
+                    btnDistance.Enabled = false;
                     btnCap.Text = "Capacitor ON";
                     SendData("$SEN_ON");
                 }
                 else
                 {
                     btnTemp.Enabled = true;
+                    btnDistance.Enabled = true;
                     btnCap.Text = "Capacitor OFF";
                     SendData("$SEN_OFF");
                 }
@@ -254,32 +266,85 @@ namespace DINAMICA_SISTEMAS
 
         private void btnCSV_Click(object sender, EventArgs e)
         {
-            String YValuesCSV = "";
-            String XValuesCSV = "";
-            String CSVLine = "";
-            int XPosition = 0;
-            var value = chart1.Series["Value"].Points;
-            foreach (var item in value)
+            try
             {
-                YValuesCSV = item.YValues[0].ToString();
-                XValuesCSV = XPosition.ToString();
-                CSVLine += XValuesCSV + "," + YValuesCSV + "," + "\r\n";
-                XPosition++;
+                String YValuesCSV = "";
+                String XValuesCSV = "";
+                String CSVLine = "";
+                int XPosition = 0;
+                var value = chart1.Series["Value"].Points;
+                foreach (var item in value)
+                {
+                    YValuesCSV = item.YValues[0].ToString();
+                    XValuesCSV = XPosition.ToString();
+                    CSVLine += XValuesCSV + "," + YValuesCSV + "," + "\r\n";
+                    XPosition++;
+                }
+                Console.WriteLine(CSVLine);
+                CreateCSV(CSVLine);
             }
-            Console.WriteLine(CSVLine);
-            CreateCSV(CSVLine);
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
         }
 
         private void CreateCSV(String text)
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "CSV data|*.csv|TEXT data|*.txt";
-            saveFileDialog1.Title = "Guardar";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            try
             {
-                StreamWriter file = new StreamWriter(saveFileDialog1.FileName);
-                file.WriteLine(text);
-                file.Close();
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                saveFileDialog1.Filter = "CSV data|*.csv|TEXT data|*.txt";
+                saveFileDialog1.Title = "Guardar";
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    StreamWriter file = new StreamWriter(saveFileDialog1.FileName);
+                    file.WriteLine(text);
+                    file.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnDistance_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (btnCap.Text.Equals("Distancia OFF"))
+                {
+                    btnTemp.Enabled = false;
+                    btnCap.Text = "Distancia ON";
+                    SendData("$DIS_ON");
+                }
+                else
+                {
+                    btnTemp.Enabled = true;
+                    btnCap.Text = "Distancia OFF";
+                    SendData("$DIS_OFF");
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCalib_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SendData("#CALIB");
+            }
+            catch (Exception ex)
+            {
+                if (Debug) MessageBox.Show(ex.StackTrace);
+                else MessageBox.Show(ex.Message);
             }
         }
     }

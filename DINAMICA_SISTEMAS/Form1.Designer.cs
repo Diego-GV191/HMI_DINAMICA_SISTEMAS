@@ -44,6 +44,8 @@
             this.btnCap = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnCSV = new System.Windows.Forms.Button();
+            this.btnDistance = new System.Windows.Forms.Button();
+            this.btnCalib = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,7 +82,7 @@
             // lblBaudRate
             // 
             this.lblBaudRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBaudRate.Location = new System.Drawing.Point(12, 45);
+            this.lblBaudRate.Location = new System.Drawing.Point(12, 9);
             this.lblBaudRate.Name = "lblBaudRate";
             this.lblBaudRate.Size = new System.Drawing.Size(113, 26);
             this.lblBaudRate.TabIndex = 1;
@@ -90,7 +92,7 @@
             // lblPort
             // 
             this.lblPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPort.Location = new System.Drawing.Point(12, 94);
+            this.lblPort.Location = new System.Drawing.Point(12, 58);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(113, 24);
             this.lblPort.TabIndex = 1;
@@ -105,7 +107,7 @@
             "4800",
             "9600",
             "115200"});
-            this.cmbBaudRate.Location = new System.Drawing.Point(131, 43);
+            this.cmbBaudRate.Location = new System.Drawing.Point(131, 7);
             this.cmbBaudRate.Name = "cmbBaudRate";
             this.cmbBaudRate.Size = new System.Drawing.Size(121, 32);
             this.cmbBaudRate.TabIndex = 2;
@@ -115,7 +117,7 @@
             // 
             this.cmbPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbPort.FormattingEnabled = true;
-            this.cmbPort.Location = new System.Drawing.Point(131, 91);
+            this.cmbPort.Location = new System.Drawing.Point(131, 55);
             this.cmbPort.Name = "cmbPort";
             this.cmbPort.Size = new System.Drawing.Size(121, 32);
             this.cmbPort.TabIndex = 2;
@@ -124,7 +126,7 @@
             // 
             this.btnConexion.FlatAppearance.BorderSize = 0;
             this.btnConexion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConexion.Location = new System.Drawing.Point(267, 43);
+            this.btnConexion.Location = new System.Drawing.Point(267, 7);
             this.btnConexion.Name = "btnConexion";
             this.btnConexion.Size = new System.Drawing.Size(136, 32);
             this.btnConexion.TabIndex = 3;
@@ -135,7 +137,7 @@
             // lblEstadoConexion
             // 
             this.lblEstadoConexion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEstadoConexion.Location = new System.Drawing.Point(267, 91);
+            this.lblEstadoConexion.Location = new System.Drawing.Point(267, 55);
             this.lblEstadoConexion.Name = "lblEstadoConexion";
             this.lblEstadoConexion.Size = new System.Drawing.Size(136, 24);
             this.lblEstadoConexion.TabIndex = 1;
@@ -146,7 +148,7 @@
             // 
             this.btnTemp.FlatAppearance.BorderSize = 0;
             this.btnTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTemp.Location = new System.Drawing.Point(409, 45);
+            this.btnTemp.Location = new System.Drawing.Point(409, 9);
             this.btnTemp.Name = "btnTemp";
             this.btnTemp.Size = new System.Drawing.Size(199, 32);
             this.btnTemp.TabIndex = 3;
@@ -158,7 +160,7 @@
             // 
             this.btnCap.FlatAppearance.BorderSize = 0;
             this.btnCap.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCap.Location = new System.Drawing.Point(409, 83);
+            this.btnCap.Location = new System.Drawing.Point(409, 47);
             this.btnCap.Name = "btnCap";
             this.btnCap.Size = new System.Drawing.Size(199, 32);
             this.btnCap.TabIndex = 3;
@@ -170,7 +172,7 @@
             // 
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(614, 45);
+            this.button1.Location = new System.Drawing.Point(614, 9);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(136, 32);
             this.button1.TabIndex = 3;
@@ -182,7 +184,7 @@
             // 
             this.btnCSV.FlatAppearance.BorderSize = 0;
             this.btnCSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCSV.Location = new System.Drawing.Point(614, 83);
+            this.btnCSV.Location = new System.Drawing.Point(614, 47);
             this.btnCSV.Name = "btnCSV";
             this.btnCSV.Size = new System.Drawing.Size(136, 32);
             this.btnCSV.TabIndex = 3;
@@ -190,13 +192,39 @@
             this.btnCSV.UseVisualStyleBackColor = true;
             this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
             // 
+            // btnDistance
+            // 
+            this.btnDistance.FlatAppearance.BorderSize = 0;
+            this.btnDistance.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDistance.Location = new System.Drawing.Point(409, 85);
+            this.btnDistance.Name = "btnDistance";
+            this.btnDistance.Size = new System.Drawing.Size(199, 32);
+            this.btnDistance.TabIndex = 3;
+            this.btnDistance.Text = "Distancia OFF";
+            this.btnDistance.UseVisualStyleBackColor = true;
+            this.btnDistance.Click += new System.EventHandler(this.btnDistance_Click);
+            // 
+            // btnCalib
+            // 
+            this.btnCalib.FlatAppearance.BorderSize = 0;
+            this.btnCalib.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCalib.Location = new System.Drawing.Point(614, 85);
+            this.btnCalib.Name = "btnCalib";
+            this.btnCalib.Size = new System.Drawing.Size(136, 32);
+            this.btnCalib.TabIndex = 3;
+            this.btnCalib.Text = "Calibración";
+            this.btnCalib.UseVisualStyleBackColor = true;
+            this.btnCalib.Click += new System.EventHandler(this.btnCalib_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(764, 406);
+            this.Controls.Add(this.btnDistance);
             this.Controls.Add(this.btnCap);
             this.Controls.Add(this.btnTemp);
+            this.Controls.Add(this.btnCalib);
             this.Controls.Add(this.btnCSV);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnConexion);
@@ -229,6 +257,8 @@
         private System.Windows.Forms.Button btnCap;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnCSV;
+        private System.Windows.Forms.Button btnDistance;
+        private System.Windows.Forms.Button btnCalib;
     }
 }
 
